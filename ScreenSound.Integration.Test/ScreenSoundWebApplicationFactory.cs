@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using ScreenSound.Banco;
+using System.Text.Json.Serialization;
 
 namespace ScreenSound.Integration.Test
 {
@@ -16,5 +18,14 @@ namespace ScreenSound.Integration.Test
             Context = scope.ServiceProvider.GetRequiredService<ScreenSoundContext>();
         }
 
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            builder.ConfigureServices(services =>
+            {
+                services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            });
+
+            base.ConfigureWebHost(builder);
+        }
     }
 }
