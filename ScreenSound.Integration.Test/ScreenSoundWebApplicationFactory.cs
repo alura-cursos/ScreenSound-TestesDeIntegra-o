@@ -18,14 +18,5 @@ namespace ScreenSound.Integration.Test
             Context = scope.ServiceProvider.GetRequiredService<ScreenSoundContext>();
         }
 
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
-        {
-            builder.ConfigureServices(services =>
-            {
-                services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-            });
-
-            base.ConfigureWebHost(builder);
-        }
     }
 }
